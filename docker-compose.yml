@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        app_name: server
+    networks:
+      - internal
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        app_name: client
+    depends_on:
+      - server
+    restart: always
+    links:
+      - server
+    networks:
+      - internal
+
+networks:
+  internal:
